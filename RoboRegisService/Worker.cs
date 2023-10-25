@@ -13,16 +13,30 @@ namespace RoboRegisService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            //while (!stoppingToken.IsCancellationRequested)
-            //{
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+            _logger.LogInformation("O serviço está iniciando.");
 
+            stoppingToken.Register(() => _logger.LogInformation("Tarefa de segundo plano está parando."));
+
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Executando tarefa: {time}", DateTimeOffset.Now);
                 ServiceRobo sr = new ServiceRobo();
                 await sr.ConsultarProdutosPlanilhaFiltrada();
-                _logger.LogInformation("Worker stoping at: {time}", DateTimeOffset.Now);                
+                stoppingToken.Register(() => _logger.LogInformation("Serviço Finalizado: {time}", DateTimeOffset.Now));
+                await Task.Delay(14400000, stoppingToken);
 
-           //}
+            }
+
+            _logger.LogInformation("O serviço está parando.");
+                
         }
-    }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseWindowsService()
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<Worker>();
+                });
+    }      
 }
