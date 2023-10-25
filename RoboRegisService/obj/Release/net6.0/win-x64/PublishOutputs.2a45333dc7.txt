@@ -1,0 +1,4 @@
+C:\Users\Felipe\Desktop\RoboRegisService\appsettings.Development.json
+C:\Users\Felipe\Desktop\RoboRegisService\appsettings.json
+C:\Users\Felipe\Desktop\RoboRegisService\RoboRegisService.pdb
+C:\Users\Felipe\Desktop\RoboRegisService\RoboRegisService.exe
