@@ -1,4 +1,4 @@
-using RoboRegisService.Services;
+using RoboRegisService.Service;
 
 namespace RoboRegisService
 {
@@ -21,7 +21,7 @@ namespace RoboRegisService
             {
                 _logger.LogInformation("Executando tarefa: {time}", DateTimeOffset.Now);
                 ServiceRobo sr = new ServiceRobo();
-                await sr.ConsultarProdutosPlanilhaFiltrada();
+                await sr.ConsultarRegistros();
                 stoppingToken.Register(() => _logger.LogInformation("Serviço Finalizado: {time}", DateTimeOffset.Now));
                 await Task.Delay(14400000, stoppingToken);
 
